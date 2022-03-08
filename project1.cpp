@@ -21,7 +21,7 @@ float average(pStu Stu) {
 
 int main() {
     Student Stu[10];
-    ifstream InputFile("./input.txt");
+    ifstream InputFile("./input1.txt");
 
     // use three structrues to store the sum, max, and min of score1, score2 and score3.
     Student Sum, Max, Min;
