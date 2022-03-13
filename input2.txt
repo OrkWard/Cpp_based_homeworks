@@ -1,0 +1,8 @@
+1 K.Weng Math 4 4 4
+1 T.Dixon 3 2 Chinese 5 Physics 1 9 3
+1 V.Chu 0 1 History 4
+1 L.Tson  English 3 Surveying 2
+1 L.Lee   History 3 C++ 1
+1 I.Young 2 2 3 4
+2
+3
