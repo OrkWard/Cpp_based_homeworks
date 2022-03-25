@@ -1,6 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 // four type of room type
@@ -42,41 +44,44 @@ class Labyrinth {
 	
 	private:
 		void allocPrcMst(void); // this function randomly allocate the princess and monster
-		void constrDoor(void); // this function randomly create the doors
+		void allocDoor(void); // this function randomly create the doors
 		bool reachable(void); // check the labyrinthe is whether legal or not
 };
 void Labyrinth::allocPrcMst(void) {
 	// todo
 }
-void Labyrinth::constrDoor(void) {
+void Labyrinth::allocDoor(void) {
 	// todo
 }
 bool Labyrinth::reachable(void) {
 	// todo
 }
 void Labyrinth::initialize(void) {
-
+	do {
+		allocPrcMst();
+		allocDoor();
+	} while(!reachable());
 }
 
-struct player {
-	int positionX;
-	int positionY;
-	bool meetPrc;
-};
-
+// get the number of direction
 int findDirectNum(string cmd) {
 	for (int i = 0; i < 4; i++) {
 		if (direction[i] == cmd) return i;
 	}
+	return -1;
 }
 
-int main() {
+// the game procedure
+void gameProcedure(void) {
 	// only need to record the position 
 	// the player
-	struct player hero;
-
+	struct {
+		int positionX;
+		int positionY;
+		bool meetPrc;
+	} hero;
 	int labySize;
-	cout << "Welcome to Save the Princess." << endl << "Please enter the labyrinth size:" << endl;
+	cout << "Please enter the labyrinth size:";
 	do {
 		cin >> labySize;
 		if (labySize < 3) {
@@ -97,18 +102,18 @@ int main() {
 	hero.positionX = (labySize + 1) / 2;
 	cout << "Welcome to the lobby. There are 3 exits: east, west, and up." << endl;
 	cout << "Enter your command: ";
-	
-	// the game procedure
-
-}
-
-bool gameProcedure(struct player hero, Labyrinth* laby) {
 	bool withPrc = false;
 	while(1) {
 		string cmd;
 		cin >> cmd;
 		stringstream ss(cmd);
 		ss >> cmd; ss >> cmd;
+		while (findDirectNum(cmd) == -1) {
+			cout << "Please input a legal direction, for example \"go east\":";
+			cin >> cmd;
+			ss.str(cmd); ss.clear();
+			ss >> cmd; ss >> cmd;
+		}
 
 		// move
 		switch(findDirectNum(cmd)) {
@@ -117,7 +122,7 @@ bool gameProcedure(struct player hero, Labyrinth* laby) {
 			case 2: hero.positionX--; break;
 			case 3: hero.positionX++; break;
 		}
-		
+
 		// if visited
 		if (!laby->m_rooms[hero.positionX][hero.positionY].visited) {
 			cout << "You've entered a new room. ";
@@ -127,10 +132,12 @@ bool gameProcedure(struct player hero, Labyrinth* laby) {
 			if (laby->m_rooms[hero.positionX][hero.positionY].roomType == monster) {
 				cout << "Damn! A monster! You dead.";
 				cout << "Game Over";
-				return 0;
+				return ;
 			}
 			else if (laby->m_rooms[hero.positionX][hero.positionY].roomType == princess) {
 				cout << "Congratulation! You find the secret room!" << endl;
+
+				// communicate with princess
 				cout << "You see the princess. Enter to continue:" << endl;
 				getline(cin, cmd);
 				cout << "You: I will bring you out here, my princess." << endl;
@@ -145,7 +152,7 @@ bool gameProcedure(struct player hero, Labyrinth* laby) {
 			if (laby->m_rooms[hero.positionX][hero.positionY].roomType == lobby) {
 				if (withPrc) {
 					cout << "You bring the princess out of the labyrinth! You've won the game!";
-					return 0;
+					return ;
 				}
 				else {
 					cout << "You've back to the lobby, but only yourself. Where is the princess?";
@@ -165,4 +172,26 @@ bool gameProcedure(struct player hero, Labyrinth* laby) {
 		}
 		cout << endl << "Enter your command: ";
 	}
+}
+
+int main() {
+	// seed for random numbers
+	unsigned seed;
+	seed = time(0);
+	srand(seed);
+
+	cout << "Welcome to Save the Princess." << endl;
+
+	// game repeat
+	while(1) {
+		gameProcedure();
+		cout << "Do you want to play again? [Yes(Y)/No(N)]:";
+		string again;
+		cin >> again;
+		if (again[0] = 'Y') 
+			continue;
+		else 
+			break;
+	}
+	return 0;
 }
