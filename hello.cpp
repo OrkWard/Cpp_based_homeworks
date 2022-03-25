@@ -1,23 +1,18 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <iomanip>
 using namespace std;
 
 int main() {
 	string Name;
-
-	getline(cin, Name);
-	stringstream ss(Name);
-	ss >> Name;
-	cout << Name << endl;
-	ss >> Name;
-	cout << Name << endl;
-	getline(cin, Name);
-	ss.str(Name);
-	ss.clear();
-	Name.clear();
-	ss >> Name;
-	cout << Name << endl;
-	cout << "hello world! " << Name << endl;
+	cout << "[]" << endl << "[]";
+	cout << "0   ";
+	for (int i = 0; i < 255; i++) {
+		char c = i;
+		cout << (char)i << " ";
+		if (i % 16 == 0) cout << endl << left << setw(4) << i / 16;
+	}
+	cin >> Name;
 	return 0;
 }

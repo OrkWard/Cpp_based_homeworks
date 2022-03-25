@@ -3,6 +3,8 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
+#include <windows.h> // use for debug
 using namespace std;
 
 // four type of room type
@@ -18,7 +20,7 @@ const string direction[4] = {"up", "down", "west", "east"};
 struct room {
 	ROOMTYPE roomType;
 	int doorNum;
-	bool direction[4];
+	bool direction[4] = {false, false, false, false};
 	bool visited = false;
 };
 
@@ -30,6 +32,12 @@ class Labyrinth {
 			for (int i = 0; i < size; i++) {
 				m_rooms[i] = new struct room[size];
 			}
+			for (int i = 0; i < size; i++)
+				for (int j = 0; j < size; j++)
+					m_rooms[i][j].roomType = normal;
+			m_lobbyX = m_size / 2;
+			m_lobbyY = m_size / 2;
+			m_rooms[m_lobbyX][m_lobbyY].roomType = lobby;
 		}
 		~Labyrinth() {
 			for (int i = 0; i < m_size; i++) {
@@ -40,27 +48,112 @@ class Labyrinth {
 
 		int m_size;
 		struct room** m_rooms;
+		int m_lobbyX, m_lobbyY;
 		void initialize(void);
 	
 	private:
 		void allocPrcMst(void); // this function randomly allocate the princess and monster
 		void allocDoor(void); // this function randomly create the doors
-		bool reachable(void); // check the labyrinthe is whether legal or not
+		int reachable(int positionX, int positionY); // check whether the princess and monster room
+													  // reachable from the given position
+		void printMap(void); // use for debug, print the map
 };
 void Labyrinth::allocPrcMst(void) {
-	// todo
+	// position for princess and monster
+	int prcX, prcY;
+	int monX, monY;
+
+	// allocate a random place that doesn't spot on lobby for princess
+	do {
+		prcX = (int)sqrt(rand() % m_size*m_size);
+		prcY = (int)sqrt(rand() % m_size*m_size);
+	} while(prcX != m_lobbyX && prcY != m_lobbyY);
+	m_rooms[prcX][prcY].roomType = princess;
+
+	// allocate a random place that doesn't spot on lobby for pincess and lobby for monster
+	do {
+		monX = (int)sqrt(rand() % m_size*m_size);
+		monY = (int)sqrt(rand() % m_size*m_size);
+	} while(monX != m_lobbyX && monX != prcX && monY != m_lobbyY && monY != prcY);
+	m_rooms[monX][monY].roomType = monster;
 }
 void Labyrinth::allocDoor(void) {
-	// todo
+	// the door has the possibility of 60%
+	for (int i = 0; i < m_size; i++) {
+		for (int j = 0; j < m_size; j++) {
+			if (i < m_size) m_rooms[i][j].direction[1] = (rand() % 1000)*1.0 / 1000 > 0.4;
+			if (j < m_size) m_rooms[i][j].direction[3] = (rand() % 1000)*1.0 / 1000 > 0.4;
+			m_rooms[i][j].doorNum = m_rooms[i][j].direction[0] + m_rooms[i][j].direction[1] + \
+									m_rooms[i][j].direction[2] + m_rooms[i][j].direction[3];
+		}
+	}
 }
-bool Labyrinth::reachable(void) {
-	// todo
+int Labyrinth::reachable(int positionX, int positionY) {
+	// calculate how many important rooms can be reached
+	int reach = 0;
+	if (m_rooms[positionX][positionY].roomType == princess) return 1;
+	else if (m_rooms[positionX][positionY].roomType == monster) return 1;
+	else {
+		if (m_rooms[positionX][positionY].direction[0]) reach += reachable(positionX, positionY + 1);
+		if (m_rooms[positionX][positionY].direction[1]) reach += reachable(positionX, positionY - 1);
+		if (m_rooms[positionX][positionY].direction[2]) reach += reachable(positionX - 1, positionY);
+		if (m_rooms[positionX][positionY].direction[3]) reach += reachable(positionX + 1, positionY);
+	}
+	return reach;
+}
+void Labyrinth::printMap(void) {
+	// handle for cursor moving, and cursor position
+	HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
+	// cursor position
+	COORD position;
+	for (int i = 0; i < m_size; i++)
+		for (int j = 0; j < m_size; j++) {
+			position.X = 10*j;
+			position.Y = 5*i + 8;
+			SetConsoleCursorPosition(screen, position);
+
+			// the horizontal line
+			if (m_rooms[i][j].direction[1]) cout << "[]    [][]" << endl;
+			else cout << "[][][][][]" << endl;
+
+			// the vertical line
+			position.X += 8;
+			position.Y -= 4;
+			if (m_rooms[i][j].direction[3]) {
+				SetConsoleCursorPosition(screen, position); cout << "[]"; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << "[]"; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << "[]"; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << "[]"; 
+			}
+			else {
+				SetConsoleCursorPosition(screen, position); cout << "[]"; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << " "; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << " "; position.Y++;
+				SetConsoleCursorPosition(screen, position); cout << "[]"; 
+			}
+
+			position.X -= 7;
+			position.Y -= 2;
+			SetConsoleCursorPosition(screen, position);
+			if (m_rooms[i][j].roomType == monster) {
+				cout << "mostr" << endl;
+			}
+			else if (m_rooms[i][j].roomType == princess) {
+				cout << "prics" << endl;
+			}
+			else if (m_rooms[i][j].roomType == lobby) {
+				cout << "lobby" << endl;
+			}
+		}
 }
 void Labyrinth::initialize(void) {
+	// allocate princess, monster and door, if princess or monster is
+	// unreachable then reallocate
 	do {
 		allocPrcMst();
 		allocDoor();
-	} while(!reachable());
+		printMap();
+	} while(reachable(m_lobbyX, m_lobbyY) < 2);
 }
 
 // get the number of direction
