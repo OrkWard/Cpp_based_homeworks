@@ -1,6 +1,19 @@
 This workspace is used to learn basic C++ language. Only single source files, perhaps.
 
-### project3
+### project 2
+#### 界面
+提示符：按1开始输入学生信息，按2输出表单，按3退出程序。  
+在一行内输入信息，回车结束输入；输出表单后再次弹出提示框
+
+#### 输入
+学生信息：名字；课程（名字/代号）；分数。用空白符分隔
+
+#### 数据结构
+ - 类Student：存储了一个学生的所有数据，string类型的名字，链表形式的课程和分数
+ - 数组Students，下标为学生no
+ - 结构体Course，存储课程名-分数对和链表指针
+
+### project 3
 The procedure are listed below:
  - First, player enter the game, and see the lobby.
  - Second, choose a direction and go to the next room.
