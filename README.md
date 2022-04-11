@@ -27,3 +27,5 @@ How to construct the map?
 2. Construct the princess and the monster room randomly; 
 3. Construct the doors randomly(travel through the whole maps, check for each door and rondomly decide whether there is a door or not)
 4. check if the princess and the monster are reachable, if not, reconstruct the map.
+
+### project 4
