@@ -29,3 +29,12 @@ How to construct the map?
 4. check if the princess and the monster are reachable, if not, reconstruct the map.
 
 ### project 4
+#### Requirement
+ - `pdadd` is used to add an entity to the diary for the date. If an entity of the same date is in the diary, the existing one would be replaced. `pdadd` reads lines of the diary from the stdin, line by line, until a line with a single `.` character or the `EOF` character (`<C-z>` in Windows)
+ - `pdlist` list all entities in the diary ordered by date. If the `start` and `end` date are provided through command line parameters, it lists entities between start and end only. This program lists out to the stdout.
+ - `pdshow` prints the content of the specified date out to the stdout.
+ - `pdremove` removes one entity of the date. It return 0 on success and -1 on failure.
+ The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process.  
+This project contains four programs, now specify the usage. 
+ - `pdadd`: need one parameter: date. The format is year/month/day, then to input the diary entity.
+ - `pdlist`: one or zero parameter: 
