@@ -36,5 +36,42 @@ How to construct the map?
  - `pdremove` removes one entity of the date. It return 0 on success and -1 on failure.
  The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process.  
 This project contains four programs, now specify the usage. 
- - `pdadd`: need one parameter: date. The format is year/month/day, then to input the diary entity.
- - `pdlist`: one or zero parameter: 
+ - `pdadd`: need one parameter: date. The format is year/month/day, then to input the diary entity. Output a single file, file format:
+   - Base on character
+   - Each entity of diaries is formed with 1. Date; 2. Content, line by line, ends with a single line of **.**
+   - No empty line between
+ - `pdlist`: one parameter: range, formatted as `start:end`, any white chars between. Output the diary from start to end. If start or the end if missing, then fill with 1 and max separately, default. 
+ - `pdshow`: one parameter: date. The same format as pdadd.
+ - `pdremove`: one parameter: date. The same format as before.
+#### Implementation
+File structure:
+```
+pd.h
+pd.cpp
+	pdadd.cpp
+	pdlist.cpp
+	pdshow.cpp
+	pdremove.cpp
+```
+pd.h implementation:
+```
+class Entity: store an entity of diary, including date, lines(one String); a method to read an entity in, a method to print an entity.
+struct EntityNode: store a node of entity, use the structure of linked list to store all the entities. This struct includes an class Entity and a pointer to next.
+function readDiary: read a diary in, store in a struct EntityNode.
+function writeDiary: output an EntityNode to local file system.
+```
+pdadd.cpp
+```
+main: read an entity, add it to the local file. If there wasn't a exsiting file, then create a file and print a alertion. 
+```
+pdlist.cpp
+```
+main: read the file, print the diaries according to the parameter. If the file is not exist, print a alertion.
+```
+pdshow.cpp
+```
+main: almost the same as pdlist.cpp:main
+```
+pdremove.cpp
+```
+main: read the file, remove the indicated diary.
