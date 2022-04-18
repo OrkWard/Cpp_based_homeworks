@@ -55,10 +55,7 @@ pd.cpp
 ```
 pd.h implementation:
 ```
-class Entity: store an entity of diary, including date, lines(one String); a method to read an entity in, a method to print an entity.
-struct EntityNode: store a node of entity, use the structure of linked list to store all the entities. This struct includes an class Entity and a pointer to next.
-function readDiary: read a diary in, store in a struct EntityNode.
-function writeDiary: output an EntityNode to local file system.
+class Diary: store the whole diary, inherit from container map, date as key, String as value; a method to read an diary in, a method to print an diary.
 ```
 pdadd.cpp
 ```
