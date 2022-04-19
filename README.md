@@ -34,14 +34,14 @@ How to construct the map?
  - `pdlist` list all entities in the diary ordered by date. If the `start` and `end` date are provided through command line parameters, it lists entities between start and end only. This program lists out to the stdout.
  - `pdshow` prints the content of the specified date out to the stdout.
  - `pdremove` removes one entity of the date. It return 0 on success and -1 on failure.
- The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process.  
+ The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process. 	 
 This project contains four programs, now specify the usage. 
- - `pdadd`: need one parameter: date. The format is year/month/day, then to input the diary entity. Output a single file, file format:
+ - `pdadd`: none parameter. Output a single file, file format:
    - Base on character
-   - Each entity of diaries is formed with 1. Date; 2. Content, line by line, ends with a single line of **.**
-   - No empty line between
- - `pdlist`: one parameter: range, formatted as `start:end`, any white chars between. Output the diary from start to end. If start or the end if missing, then fill with 1 and max separately, default. 
- - `pdshow`: one parameter: date. The same format as pdadd.
+   - Each entity of diaries is formed with 1. Date; 2. Content, all in a single line, separated by two spaces.
+   - No empty line between or after
+ - `pdlist`: one or two parameter: range, use like `pdlist [start] [end]`. Output the diary from start to end. If only one parameter specified, treat it as start defautly and add option [-r] to reverse. As for the date format, treat the first four digit as year, the next two as month, the next two as day, and the input number can be 4-digits, 6-digits or 8-digits. Add [-a] to any parameters specified after and list all the entity.
+ - `pdshow`: one parameter: date. Must be an 8-digits .
  - `pdremove`: one parameter: date. The same format as before.
 #### Implementation
 File structure:

@@ -1,13 +1,23 @@
-objects = pdadd.o pdlist.o pdshow.o pdremove.o 
+objects = pdadd.o pdlist.o pdshow.o pdremove.o pd.o
 executable = pdadd.exe pdlist.exe pdshow.exe pdremove.exe
 
 all: $(objects)
-	g++ -o pdadd.exe pdadd.o
-	g++ -o pdlist.exe pdlist.o
-	g++ -o pdshow.exe pdshow.o
-	g++ -o pdremove.exe pdremove.o
+	g++ pdadd.o pd.o -o pdadd.exe
+	g++ pdlist.o pd.o -o pdlist.exe
+	g++ pdshow.o pd.o -o pdshow.exe
+	g++ pdremove.o pd.o -o pdremove.exe
 
-pdadd.o pdlist.o pdshow.o pdremove.o: pd.h
+pd.o: pd.h
+	g++ -g -c pd.cpp
 
-*clean:
+pdadd.o: pd.h
+	g++ -g -c pdadd.cpp
+
+pdadd: pdadd.o pd.o
+	g++ -g pdadd.o pd.o -o pdadd.exe 
+
+clinter:
+	rm $(objects)
+
+clean:
 	rm $(objects) $(executable)
