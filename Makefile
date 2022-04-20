@@ -10,11 +10,11 @@ all: $(objects)
 pd.o: pd.h
 	g++ -g -c pd.cpp
 
-pdadd.o: pd.h
-	g++ -g -c pdadd.cpp
+pdadd: pd.o
+	g++ -g pdadd.cpp pd.o -o pdadd.exe 
 
-pdadd: pdadd.o pd.o
-	g++ -g pdadd.o pd.o -o pdadd.exe 
+pdlist: pd.o
+	g++ -g pdlist.cpp pd.o -o pdlist.exe
 
 clinter:
 	rm $(objects)

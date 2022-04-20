@@ -34,7 +34,9 @@ How to construct the map?
  - `pdlist` list all entities in the diary ordered by date. If the `start` and `end` date are provided through command line parameters, it lists entities between start and end only. This program lists out to the stdout.
  - `pdshow` prints the content of the specified date out to the stdout.
  - `pdremove` removes one entity of the date. It return 0 on success and -1 on failure.
- The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process. 	 
+ The software stores the diary in one data file, and reads it to the memory at the beginning of each program, and stores it back to the file at the end of the process.
+
+
 This project contains four programs, now specify the usage. 
  - `pdadd`: none parameter. Output a single file, file format:
    - Base on character
@@ -57,18 +59,3 @@ pd.h implementation:
 ```
 class Diary: store the whole diary, inherit from container map, date as key, String as value; a method to read an diary in, a method to print an diary.
 ```
-pdadd.cpp
-```
-main: read an entity, add it to the local file. If there wasn't a exsiting file, then create a file and print a alertion. 
-```
-pdlist.cpp
-```
-main: read the file, print the diaries according to the parameter. If the file is not exist, print a alertion.
-```
-pdshow.cpp
-```
-main: almost the same as pdlist.cpp:main
-```
-pdremove.cpp
-```
-main: read the file, remove the indicated diary.

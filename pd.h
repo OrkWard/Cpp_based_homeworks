@@ -13,5 +13,6 @@ class Diary: public map<string, string> {
 		Diary(); // initialize
 		bool readDiary(void);	// read diary from local file, return whether succeed or not
 		void writeDiary(void) const;	// write the file to the local file
+		void outputDiary(void) const;	// output the diaries to the cout
 };
 #endif
