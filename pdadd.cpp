@@ -6,7 +6,9 @@ int main(int argc, char** argv) {
     // Program specify
     cout << "pdadd is tool for add diary entities." << endl << endl;
     Diary *myDiary = new Diary();
-    myDiary->readDiary();
+    if(!myDiary->readDiary()) {
+        cout << "Diary not exist, create new file" << endl;
+    }
 
     // Set time
     time_t seconds = time(0);
@@ -24,7 +26,7 @@ int main(int argc, char** argv) {
         if (oneLine == ".") 
             break;
         else 
-            content += oneLine + '\r';
+            content += oneLine + '\0';
     }
     myDiary->insert({now, content});
     myDiary->writeDiary();

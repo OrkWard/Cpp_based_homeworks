@@ -7,13 +7,13 @@ all: $(objects)
 	g++ pdshow.o pd.o -o pdshow.exe
 	g++ pdremove.o pd.o -o pdremove.exe
 
-pd.o: pd.h
+pd.o: pd.h pd.cpp
 	g++ -g -c pd.cpp
 
-pdadd: pd.o
+pdadd: pd.o pdadd.cpp
 	g++ -g pdadd.cpp pd.o -o pdadd.exe 
 
-pdlist: pd.o
+pdlist: pd.o pdlist.cpp
 	g++ -g pdlist.cpp pd.o -o pdlist.exe
 
 clinter:
