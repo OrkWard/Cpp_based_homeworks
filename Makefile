@@ -10,6 +10,7 @@ all: $(objects)
 pd.o: pd.h pd.cpp
 	g++ -g -c pd.cpp
 
+# these target is used for debug
 pdadd: pd.o pdadd.cpp
 	g++ -g pdadd.cpp pd.o -o pdadd.exe 
 
