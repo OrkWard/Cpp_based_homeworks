@@ -23,4 +23,4 @@ pdremove: pd.o pdremove.cpp
 	g++ -g pdremove.cpp pd.o -o pdremove.exe
 
 clean:
-	rm $(objects) $(executable)
+	del /s *.exe *.o
