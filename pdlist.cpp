@@ -114,7 +114,6 @@ int main(int argc, char** argv) {
                 cout << "Error: invalid date format" << endl;
                 delete myDiary, start, end;
             }
-            Diary *specifiedDiary = new Diary();
             for (Diary::iterator iter = myDiary->begin(); iter != myDiary->end(); iter++) {
                 if (iter->first.substr(0, startLen) >= *start && iter->first.substr(0, endLen) <= *end) 
                     specifiedDiary->insert({iter->first, iter->second});

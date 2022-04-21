@@ -12,6 +12,7 @@ bool Diary::readDiary(void) {
         getline(fs, content);
         this->insert({date, content});
     }
+    fs.close();
     return true;
 }
 
@@ -31,11 +32,11 @@ void Diary::outputDiary(void) const {
     for(const_iterator iter = this->begin(); iter != this->end(); ++iter) {
         date = iter->first;
         content = iter->second;
-        cout << date.substr(0, 4) << '/' << date.substr(4, 2) << '/' << date.substr(6, 2) << endl;
+        cout << date.substr(0, 4) << '/' << date.substr(4, 2) << '/' << date.substr(6, 2) << ":" << endl;
         int pos = 0;
-        while (iter->second.find('\0', pos) < iter->second.length()) {
-            cout << content.substr(pos, content.find('\0', pos) - pos - 1) << endl;
-            pos = content.find('\0', pos) + 1;
+        while (iter->second.find('\001', pos) < iter->second.length()) {
+            cout << content.substr(pos, content.find('\001', pos) - pos) << endl;
+            pos = content.find('\001', pos) + 1;
         }
     }
 }

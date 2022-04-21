@@ -16,8 +16,8 @@ pdadd: pd.o pdadd.cpp
 pdlist: pd.o pdlist.cpp
 	g++ -g pdlist.cpp pd.o -o pdlist.exe
 
-clinter:
-	rm $(objects)
+pdshow: pd.o pdshow.cpp
+	g++ -g pdshow.cpp pd.o -o pdshow.exe
 
 clean:
 	rm $(objects) $(executable)
