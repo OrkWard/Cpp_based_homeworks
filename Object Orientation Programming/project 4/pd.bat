@@ -42,3 +42,4 @@ echo 1 >input.txt
 pdremove 20220421<input.txt %multiple diaries%   
 pdremove 20224      %date format error%
 del input.txt
+pause
