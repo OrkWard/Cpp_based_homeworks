@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
             while(fgets(oneLine, MAX_DIARY_LENGTH, fp) != NULL) {
                 cout << oneLine;
             }
+            pclose(fp);
             return 0;
         }
     }

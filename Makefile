@@ -19,5 +19,8 @@ pdlist: pd.o pdlist.cpp
 pdshow: pd.o pdshow.cpp
 	g++ -g pdshow.cpp pd.o -o pdshow.exe
 
+pdremove: pd.o pdremove.cpp
+	g++ -g pdremove.cpp pd.o -o pdremove.exe
+
 clean:
 	rm $(objects) $(executable)
