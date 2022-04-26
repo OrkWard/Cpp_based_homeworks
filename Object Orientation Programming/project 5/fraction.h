@@ -16,7 +16,7 @@ class Fraction {
         Fraction();     // default ctor
         Fraction(int numerator, int denominator);   // ctor takes two integers as parameters
         Fraction(const Fraction& old_frac);          // copy ctor
-        Fraction(string &str);
+        Fraction(string &str);                      // str to fraction
         // arithmetical operators
         Fraction operator+(const Fraction& frac) const;
         Fraction operator-(const Fraction& frac) const;
@@ -38,5 +38,6 @@ class Fraction {
         int m_numerator, m_denominator;
 };
 
+// insertor and extractor
 ostream& operator<<(ostream &out, const Fraction & frac);
 istream& operator>>(istream &in, Fraction &frac);

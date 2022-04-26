@@ -5,12 +5,14 @@ Fraction::Fraction(int numerator, int denominator): m_numerator(numerator), m_de
 Fraction::Fraction(const Fraction& old_frac): m_numerator(old_frac.m_numerator), m_denominator(old_frac.m_denominator) {}
 Fraction::Fraction(string &str) {
     stringstream ss;
+    // check if there is '.', if not treat as integer
     if(str.find('.') >= 0 && str.find('.') < str.length()) {
-        ss << str.substr(0, str.find('.'));
+        ss << str.substr(0, str.find('.')) << ' ';
+        ss << str.substr(str.find('.') + 1);
         int integer = 0, decimal = 0;
         ss >> integer;
-        ss << str.substr(str.find('.') + 1);
         ss >> decimal;
+        // use the integer part and decimal part to construct fraction
         int numerator = integer, denominator = 1, tmp = decimal;
         while(tmp > 0) {
             tmp /= 10;
@@ -64,6 +66,7 @@ Fraction Fraction::operator/(const Fraction &frac) const {
     return new_frac;
 }
 bool Fraction::operator<(const Fraction &frac) const {
+    // make difference to compare
     Fraction differ = *this - frac;
     return differ.m_denominator*differ.m_numerator < 0;
 }

@@ -21,6 +21,8 @@ int main() {
     cout << "(double)" << Fraction(61, 29) << " = " << (double)Fraction(61, 29) << endl;
     cout << "To string(default presicion): " << Fraction(61, 29).frac_to_string() << endl;
     cout << "To string(presicion = 3): " << Fraction(61, 29).frac_to_string(4) << endl;
+    string str = "1.414";
+    cout << "From string: Fraction(1.414) = " << Fraction(str) << endl;
 
     return 0;
 }
