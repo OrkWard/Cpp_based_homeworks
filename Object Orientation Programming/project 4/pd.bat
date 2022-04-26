@@ -6,7 +6,7 @@
 
 ::below cases is used to test pdadd
 echo Today is a nice day> input.txt
-pdadd < input.txt   %end of file end%
+pdadd < input.txt   %end of file%
 timeout /nobreak /t 1
 echo Today is the same day> input.txt
 echo .>> input.txt
@@ -28,7 +28,7 @@ pdlist -r 20220421  %use reverse%
 pdlist 20220421 20220423 %two date restrict%
 pdlist -d           %usage error%
 pdlist 20224        %date format error%
-pdlist -a 202204    %simble cover%
+pdlist -a 202204    %symble cover%
 
 ::below cases is used to test pdshow
 pdshow              %usage description%
